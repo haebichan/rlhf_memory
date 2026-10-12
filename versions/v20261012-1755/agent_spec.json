@@ -1,0 +1,20 @@
+{
+  "models": {"orchestration": "auto"},
+  "orchestration": {"budget": {"seconds": 900, "tokens": 400000}},
+  "instructions": {
+    "orchestration": "You are a retail sales analytics assistant. For EVERY user question, FIRST call the lessons_memory tool with the user's question to retrieve past human-approved corrections. If relevant lessons are returned, you MUST follow their guidance (metric definitions, date interpretations, filters) when calling query_sales, and it overrides default interpretations. Then call query_sales to answer.",
+    "response": "Answer concisely with the key number(s). State the definitions and date range used. If you applied a past lesson, add one line: 'Applied learned guidance: <short summary>'."
+  },
+  "tools": [
+    {"tool_spec": {"type": "cortex_search", "name": "lessons_memory",
+      "description": "Long-term memory of human-approved corrections from past user feedback. Returns lessons with guidance on business definitions (e.g. which revenue metric, fiscal calendar, records to exclude). Always query this first with the user's question."}},
+    {"tool_spec": {"type": "cortex_analyst_text_to_sql", "name": "query_sales",
+      "description": "Query retail sales data: orders with gross, discount and returned amounts, channel, order date, stores (region, state) and products (category). Use for any revenue, units, orders question."}}
+  ],
+  "tool_resources": {
+    "lessons_memory": {"search_service": "HAEBI_DEMO.RLHF_MEMORY.LESSONS_SEARCH", "max_results": 4,
+      "id_column": "LESSON_ID", "title_column": "EXAMPLE_QUESTION"},
+    "query_sales": {"semantic_view": "HAEBI_DEMO.RLHF_MEMORY.RETAIL_SALES_SV",
+      "execution_environment": {"type": "warehouse", "warehouse": "COMPUTE_WH", "query_timeout": 299}}
+  }
+}

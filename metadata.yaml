@@ -1,0 +1,3 @@
+database: HAEBI_DEMO
+schema: RLHF_MEMORY
+name: RLHF_MEMORY_AGENT
