@@ -1,0 +1,23 @@
+{
+  "models": {"orchestration": "auto"},
+  "orchestration": {"budget": {"seconds": 900, "tokens": 400000}},
+  "instructions": {
+    "response": "Answer concisely with the key number(s). State the definitions and date range used.",
+    "orchestration": "You are a retail sales analytics assistant. Call query_sales to answer."
+  },
+  "tools": [
+    {
+      "tool_spec": {
+        "type": "cortex_analyst_text_to_sql",
+        "name": "query_sales",
+        "description": "Query retail sales data: orders with gross, discount and returned amounts, channel, order date, stores (region, state) and products (category). Use for any revenue, units, orders question."
+      }
+    }
+  ],
+  "tool_resources": {
+    "query_sales": {
+      "semantic_view": "HAEBI_DEMO.RLHF_MEMORY.RETAIL_SALES_SV",
+      "execution_environment": {"type": "warehouse", "warehouse": "COMPUTE_WH", "query_timeout": 299}
+    }
+  }
+}

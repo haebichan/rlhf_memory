@@ -1,0 +1,1139 @@
+[
+  {
+    "text": "**Q1 2026 revenue was $1,255,020.** That's the data model's standard revenue measure: the sum of order amounts at list price, before discounts and returns.\n\n**Date range:** January 1 to March 31, 2026. The data doesn't say when your fiscal year starts, so I assumed it matches the calendar year. If it starts in another month, Q1 would cover different dates.\n\n| Measure | Q1 2026 |\n|---|---|\n| Revenue at list price | $1,255,020 |\n| Minus discounts | \u2212$191,561.70 |\n| Minus returns | \u2212$120,204.85 |\n| **Net revenue** | **$943,253.45** |\n\nIf you'd rather use net revenue, or your fiscal year starts in another month (e.g., February), I can rerun it that way.",
+    "latency_s": 23.8,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S1",
+    "group": "seen",
+    "question": "What was revenue in Q1 of fiscal year 2026?",
+    "truth": 710794.2,
+    "run": 1,
+    "correct": false,
+    "headline": "Q1 2026 revenue was $1,255,020.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Net revenue for Q1 of fiscal year 2026 was $710,794.20.**\n\n| Item | Amount |\n|---|---|\n| Gross sales (list price) | $956,005.00 |\n| \u2212 Discounts | $147,732.05 |\n| \u2212 Returns | $97,478.75 |\n| **Net revenue** | **$710,794.20** |\n\n**Definitions used:**\n- **Time period:** The fiscal year starts February 1 and takes the name of the calendar year it ends in. That puts Q1 FY2026 at February 1 to April 30, 2025.\n- **Revenue:** Net revenue, meaning gross sales minus discounts and returns.\n- **Excluded:** Internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: the fiscal year starts Feb 1, revenue means net revenue, and internal test orders are left out.",
+    "latency_s": 18.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S1",
+    "group": "seen",
+    "question": "What was revenue in Q1 of fiscal year 2026?",
+    "truth": 710794.2,
+    "run": 1,
+    "correct": true,
+    "headline": "Net revenue for Q1 of fiscal year 2026 was $710,794.20.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Total revenue for calendar year 2025 (Jan 1 \u2013 Dec 31, 2025) was about $4.95M ($4,947,590).** That's gross revenue: the sum of all order lines at list price, which is how the sales model defines \"total revenue.\"\n\nIf you mean revenue after discounts and refunds, the figure is much lower:\n\n| Measure | 2025 amount |\n|---|---|\n| Gross revenue (list price) | $4,947,590 |\n| Less: discounts | \u2212$745,744 |\n| Less: refunds for returns | \u2212$531,297 |\n| **Net revenue** | **$3,670,549** |\n\nNet revenue is about 26% below gross. The total covers 11,450 order lines across all channels, stores and product categories.",
+    "latency_s": 16.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S2",
+    "group": "seen",
+    "question": "What was our total revenue in calendar year 2025?",
+    "truth": 2910667.75,
+    "run": 1,
+    "correct": false,
+    "headline": "Total revenue for calendar year 2025 (Jan 1 \u2013 Dec 31, 2025) was about $4.95M ($4,947,590).",
+    "lessons": "net+test"
+  },
+  {
+    "text": "Total revenue for calendar year 2025 was **$2,910,667.75**.\n\n- **Date range:** orders dated January 1 to December 31, 2025.\n- **How it's calculated:** revenue here means net revenue. That's the full list-price amount ($3,924,390) minus discounts ($593,112.50) minus refunds for returns ($420,609.75).\n- **Excluded:** internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: \"revenue\" means net revenue (list price minus discounts and returns), and internal test orders are left out of all business metrics.",
+    "latency_s": 16.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S2",
+    "group": "seen",
+    "question": "What was our total revenue in calendar year 2025?",
+    "truth": 2910667.75,
+    "run": 1,
+    "correct": true,
+    "headline": "$2,910,667.75",
+    "lessons": "net+test"
+  },
+  {
+    "text": "Table is order lines, so I'll compute both distinct orders and lines.We had **11,450 orders in 2025**.\n\n- **Date range:** January 1 to December 31, 2025, by order date.\n- **What counts as an order:** each unique order ID. The data is stored one row per order line, but in 2025 every order had exactly one line, so counting orders or lines gives the same number.\n- **What's included:** every channel, store and product, and orders that were later returned. Nothing was excluded.",
+    "latency_s": 13.0,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S3",
+    "group": "seen",
+    "question": "How many orders did we have in 2025?",
+    "truth": 10891,
+    "run": 1,
+    "correct": false,
+    "headline": "11,450 orders in 2025",
+    "lessons": "test"
+  },
+  {
+    "text": "We had **10,891 orders in 2025**.\n\n- **Time period:** Calendar year 2025, from January 1 to December 31, 2025, based on order date.\n- **How orders were counted:** Each order ID was counted once, even if the order had several lines. Internal test orders (channel = 'INTERNAL') were left out.\n\nApplied learned guidance: internal test orders are excluded from all business metrics, including order counts.",
+    "latency_s": 12.9,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S3",
+    "group": "seen",
+    "question": "How many orders did we have in 2025?",
+    "truth": 10891,
+    "run": 1,
+    "correct": true,
+    "headline": "10,891 orders in 2025",
+    "lessons": "test"
+  },
+  {
+    "text": "The West region had **$382,355 in gross sales** in Q2 FY2026. After discounts and returns, **net sales were $292,614**.\n\nThis assumes the fiscal year matches the calendar year, so Q2 is April 1 to June 30, 2026. The data doesn't say when your fiscal year starts. If it starts in a different month, the dates and numbers will change.\n\n| Measure | Q2 FY2026 (West) |\n|---|---|\n| Gross sales (at list price) | $382,355 |\n| Less: discounts | \u2013$56,899 |\n| Less: returns refunded | \u2013$32,842 |\n| **Net sales** | **$292,614** |\n| Units sold | 2,622 |\n| Orders | 887 |\n\nGross sales is the total at list price, which the data labels \"total revenue.\" Net sales is gross minus discounts and refunds for returns.\n\nIf your fiscal year starts in another month (for example February or July), tell me and I'll rerun it for the right dates.",
+    "latency_s": 16.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U1",
+    "group": "unseen",
+    "question": "How much did the West region sell in Q2 FY2026?",
+    "truth": 210709.15,
+    "run": 1,
+    "correct": false,
+    "headline": "$382,355 in gross sales",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q2 FY2026 = 2025-05-01 to 2025-07-31.The West region's net revenue in Q2 FY2026 was **$210,709.15**.\n\n- **Dates:** Q2 FY2026 runs from May 1 to July 31, 2025. The fiscal year starts February 1.\n- **How net revenue is calculated:** gross sales of $286,455, minus $42,321.05 in discounts, minus $33,424.80 in returns.\n- **Excluded:** internal test orders (channel = INTERNAL).\n- **Orders:** 808 in the period.\n\nApplied learned guidance: the February-start fiscal calendar, net revenue (not gross) as \"revenue,\" and excluding internal test orders.",
+    "latency_s": 17.6,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U1",
+    "group": "unseen",
+    "question": "How much did the West region sell in Q2 FY2026?",
+    "truth": 210709.15,
+    "run": 1,
+    "correct": true,
+    "headline": "$210,709.15",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Gross revenue for 2026 is **$3,643,920** so far. After discounts and returns, net revenue is **$2,755,410.65**.\n\n| Measure | Amount |\n|---|---|\n| Gross revenue (list price) | $3,643,920 |\n| Less discounts | \u2212$540,634.45 |\n| Less returns | \u2212$347,874.90 |\n| **Net revenue** | **$2,755,410.65** |\n\n- **Fiscal year:** The data doesn't define one, so I used the calendar year starting January 1, 2026.\n- **Date range:** The data runs from January 1 to September 30, 2026, so this covers only about nine months, not a full year.\n- **What \"revenue\" means:** The data's standard revenue figure is gross sales at list price. Net revenue takes out discounts and refunds for returns.\n\nIf your fiscal year starts in a different month (for example, February or October), tell me which one and I'll rerun the numbers.",
+    "latency_s": 21.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U2",
+    "group": "unseen",
+    "question": "What was revenue for fiscal year 2026?",
+    "truth": 2904159.2,
+    "run": 1,
+    "correct": false,
+    "headline": "$3,643,920",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Net revenue for fiscal year 2026 was **$2,904,159.20**.\n\n**Definitions used:**\n- **Fiscal year 2026** runs from Feb 1, 2025 to Jan 31, 2026. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **Revenue** means net revenue: gross amount minus discounts minus returns.\n  - Gross: $3,916,850\n  - Discounts: \u2212$589,951.75\n  - Returns: \u2212$422,739.05\n- **Internal test orders** (channel = 'INTERNAL') are left out.\n\nApplied learned guidance: the fiscal year starts Feb 1, revenue means net revenue, and internal test orders are excluded.",
+    "latency_s": 22.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U2",
+    "group": "unseen",
+    "question": "What was revenue for fiscal year 2026?",
+    "truth": 2904159.2,
+    "run": 1,
+    "correct": true,
+    "headline": "$2,904,159.20",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Camping** had the highest revenue in Q3 FY2026: **$459,720 gross** ($349,213 net). Footwear was second at $281,670 gross.\n\n\n\n**Assumptions:**\n- **Fiscal calendar:** The data doesn't say when the fiscal year starts, so I treated FY2026 as the calendar year. That makes Q3 July 1 to September 30, 2026. If your fiscal year starts in another month, tell me and I'll rerun it.\n- **Revenue:** Gross revenue is the list price of what was sold. Net revenue is gross minus discounts and refunds for returns. Camping ranks first on both.",
+    "latency_s": 15.8,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U3",
+    "group": "unseen",
+    "question": "Which product category had the highest revenue in Q3 FY2026?",
+    "truth": [
+      "CAMPING"
+    ],
+    "run": 1,
+    "correct": true,
+    "headline": "$459,720 gross",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q3 FY2026 = 2025-08-01 to 2025-10-31.**Camping** had the highest revenue in Q3 FY2026, with **$303,171** in net revenue. That's about 76% more than the next category, Footwear, at $171,967.\n\n\n\n**How this was calculated:**\n- **Revenue** means net revenue: the list-price amount minus discounts and minus refunds for returns.\n- **Q3 FY2026** covers orders dated August 1 to October 31, 2025. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **Internal test orders are left out** (orders with the channel \"INTERNAL\").\n\nApplied learned guidance: revenue is net revenue, the fiscal year starts February 1 (so Q3 is August to October), and internal test orders are excluded.",
+    "latency_s": 18.5,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U3",
+    "group": "unseen",
+    "question": "Which product category had the highest revenue in Q3 FY2026?",
+    "truth": [
+      "CAMPING"
+    ],
+    "run": 1,
+    "correct": true,
+    "headline": "$303,171",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "The answer depends on when your fiscal year starts, and the sales data doesn't define a fiscal calendar. Here's the count of orders under the most common fiscal calendars:\n\n| Fiscal year ends | Q4 FY2026 covers | Orders |\n|---|---|---|\n| June | Apr 1 \u2013 Jun 30, 2026 | **2,889** |\n| September | Jul 1 \u2013 Sep 30, 2026 | **2,816** |\n| January (common retail calendar) | Nov 1, 2025 \u2013 Jan 31, 2026 | **2,805** |\n| December (same as the calendar year) | Oct 1 \u2013 Dec 31, 2026 | No data yet. The data ends Sep 30, 2026, and that quarter is still in progress. |\n\n**How orders were counted:** each order is counted once. Every order has exactly one line, so counting order lines gives the same numbers.\n\nWhen does your fiscal year start? Once I know, I can give you one confirmed number.",
+    "latency_s": 20.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U4",
+    "group": "unseen",
+    "question": "How many orders were placed in Q4 of fiscal 2026?",
+    "truth": 2674,
+    "run": 1,
+    "correct": false,
+    "headline": "2,889",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "Q4 FY2026 = 2025-11-01 to 2026-01-31.**2,674 orders** were placed in Q4 of fiscal 2026.\n\n- **Dates:** Q4 FY2026 runs from November 1, 2025 to January 31, 2026, based on order date. The fiscal year starts February 1 and takes the name of the calendar year it ends in.\n- **What's counted:** each order ID is counted once. Orders from the INTERNAL channel are left out because they're test orders.\n\nApplied learned guidance: fiscal year starting February 1 (Q4 = Nov\u2013Jan), and INTERNAL-channel test orders excluded.",
+    "latency_s": 14.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U4",
+    "group": "unseen",
+    "question": "How many orders were placed in Q4 of fiscal 2026?",
+    "truth": 2674,
+    "run": 1,
+    "correct": true,
+    "headline": "2,674 orders",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "The data doesn't define a fiscal calendar or a \"sales\" metric, so I made two assumptions: **FY2027 starts February 2026** (a common retail calendar), and **sales means gross revenue at list price**. Under those assumptions, **Q1 FY2027 (Feb 1 \u2013 Apr 30, 2026) East region sales were $245,695**.\n\n| East region, Feb\u2013Apr 2026 | Amount |\n|---|---|\n| Gross revenue (list price) | $245,695 |\n| Less discounts | \u2013$36,013.15 |\n| Less returns | \u2013$24,503.55 |\n| **Net sales** | **$185,178.30** |\n\nFeb: $93,570 \u00b7 Mar: $80,685 \u00b7 Apr: $71,440 (gross)\n\nIf your fiscal year starts in a different month, Q1 changes:\n- **April start (Apr\u2013Jun 2026):** $228,450 gross\n- **July start (Jul\u2013Sep 2026):** $242,650 gross, $178,475.75 net\n- **October start (Oct\u2013Dec 2026):** no data yet, because the data ends in September 2026.\n\nTell me your fiscal start month and whether you mean gross or net sales, and I'll confirm the exact figure.",
+    "latency_s": 21.7,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U5",
+    "group": "unseen",
+    "question": "What were sales in the East region in Q1 FY2027?",
+    "truth": 148517.05,
+    "run": 1,
+    "correct": false,
+    "headline": "FY2027 starts February 2026",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q1 FY2027 = 2026-02-01 to 2026-04-30.Net sales in the East region for Q1 FY2027 were **$148,517**, across 549 orders.\n\n- **Date range:** Q1 FY2027 runs from Feb 1 to Apr 30, 2026. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **How it's calculated:** Net sales = gross sales of $198,445, minus $28,196 in discounts, minus $21,732 in returns.\n- **Excluded:** Internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: used the Feb\u2013Jan fiscal calendar, counted sales as net (gross minus discounts and returns), and left out internal test orders.",
+    "latency_s": 17.6,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U5",
+    "group": "unseen",
+    "question": "What were sales in the East region in Q1 FY2027?",
+    "truth": 148517.05,
+    "run": 1,
+    "correct": true,
+    "headline": "$148,517",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "We sold **25,447 units** in fiscal year 2026 so far, based on the assumptions below.\n\n- **What counts as a unit:** the total quantity on all 8,550 order lines. Returns are not subtracted, because the data only records returns as dollar amounts, not as units.\n- **Fiscal year:** the data has no fiscal calendar, so I counted fiscal year 2026 as the calendar year (January 1 \u2013 December 31, 2026). If your fiscal year starts in a different month, tell me which one and I'll redo the count.\n- **Dates covered:** orders from January 1 to September 30, 2026. That's the latest data available, so this is year-to-date, not a full year. October through December aren't in the data yet.",
+    "latency_s": 20.7,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U6",
+    "group": "unseen",
+    "question": "How many units did we sell in fiscal year 2026?",
+    "truth": 27216,
+    "run": 1,
+    "correct": false,
+    "headline": "25,447 units",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "We sold **27,216 units** in fiscal year 2026.\n\n- **Date range:** FY2026 runs from February 1, 2025 to January 31, 2026. The fiscal year starts February 1 and takes the name of the calendar year it ends in.\n- **How units are counted:** total quantity across all order lines, leaving out internal test orders (the 'INTERNAL' channel).\n\nApplied learned guidance: used the February\u2013January fiscal calendar and excluded internal test orders.",
+    "latency_s": 14.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U6",
+    "group": "unseen",
+    "question": "How many units did we sell in fiscal year 2026?",
+    "truth": 27216,
+    "run": 1,
+    "correct": true,
+    "headline": "27,216 units",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "Model defines total revenue as SUM(gross_amount). I'll also compute net for context.Revenue from the ONLINE channel in March 2026 was **$156,420**.\n\n- **How it's measured:** I used the sales data's own \"total revenue\" figure, which adds up order lines at list price. Discounts and returns are not taken out.\n- **Dates and scope:** March 1\u201331, 2026, ONLINE channel only. That covers 430 order lines.\n\nIf you take out discounts ($24,273.00) and returns ($16,102.80), net revenue was **$116,044.20**. Let me know which one you want to use from here on.",
+    "latency_s": 14.8,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U7",
+    "group": "unseen",
+    "question": "What was revenue from the ONLINE channel in March 2026?",
+    "truth": 116044.2,
+    "run": 1,
+    "correct": false,
+    "headline": "$156,420",
+    "lessons": "net"
+  },
+  {
+    "text": "Net revenue from the ONLINE channel in March 2026 was **$116,044.20**.\n\n- **How revenue is calculated:** net revenue is gross amount minus discounts minus returns.\n  - Gross: $156,420.00\n  - Discounts: \u2212$24,273.00\n  - Returns: \u2212$16,102.80\n- **Date range:** orders dated March 1\u201331, 2026 (calendar month).\n- **Filter:** ONLINE orders only, so internal test orders are already left out.\n\nApplied learned guidance: \"revenue\" means net revenue, not the gross figure the data model reports by default.",
+    "latency_s": 16.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U7",
+    "group": "unseen",
+    "question": "What was revenue from the ONLINE channel in March 2026?",
+    "truth": 116044.2,
+    "run": 1,
+    "correct": true,
+    "headline": "$116,044.20",
+    "lessons": "net"
+  },
+  {
+    "text": "The average order value in 2025 was **$432.10**, using total revenue divided by the number of orders.\n\n- **Definition:** Total revenue is the order amount at list price, before discounts and returns. That came to $4,947,590 across 11,450 orders.\n- **Date range:** January 1 to December 31, 2025.\n- **Net version:** If you take out discounts and refunded returns, revenue drops to $3,670,549. That makes the average order value **$320.57**.\n\nThe data has no single agreed definition of revenue for this metric. Let me know if you'd rather report the net figure.",
+    "latency_s": 18.7,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U8",
+    "group": "unseen",
+    "question": "What was the average order value in 2025?",
+    "truth": 267.25,
+    "run": 1,
+    "correct": false,
+    "headline": "$432.10",
+    "lessons": "net+test"
+  },
+  {
+    "text": "The average order value in 2025 was **$267.25**.\n\n- **How it's calculated:** net revenue of $2,910,667.75 divided by 10,891 distinct orders.\n- **Net revenue:** gross amount minus discounts and returns.\n- **Date range:** calendar year 2025 (January 1 to December 31, 2025), by order date.\n- **Excluded:** internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: revenue means net revenue, and internal test orders are left out of business metrics.",
+    "latency_s": 17.3,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U8",
+    "group": "unseen",
+    "question": "What was the average order value in 2025?",
+    "truth": 267.25,
+    "run": 1,
+    "correct": true,
+    "headline": "$267.25",
+    "lessons": "net+test"
+  },
+  {
+    "text": "**There were 697 CAMPING orders in fiscal Q2 2027, assuming a retail fiscal year that starts February 1.** On that calendar, FY2027 runs from Feb 2026 to Jan 2027, so Q2 is May 1 to July 31, 2026.\n\nThe data doesn't say how the fiscal calendar is set up, so that's an assumption. It's the only common setup that gives a number. If your fiscal year starts on another date, Q2 FY2027 is October 2026 or later. The data ends on September 30, 2026, so the count for those quarters is 0:\n\n\n\n**How orders were counted:** I used the standard order count, which counts order records where the product category is CAMPING. The table is described as one row per order line. If an order can have several lines, this may count some orders more than once.\n\nIf your fiscal year starts on a different date, tell me and I'll rerun the count.",
+    "latency_s": 23.2,
+    "tools": [
+      "query_sales",
+      "system_execute_sql",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U9",
+    "group": "unseen",
+    "question": "How many CAMPING orders did we have in fiscal Q2 2027?",
+    "truth": 660,
+    "run": 1,
+    "correct": false,
+    "headline": "There were 697 CAMPING orders in fiscal Q2 2027, assuming a retail fiscal year that starts February 1.",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "FY2027 Q2 = 2026-05-01 to 2026-07-31.We had **660 CAMPING orders** in fiscal Q2 2027.\n\n- **Date range:** Fiscal Q2 FY2027 runs from May 1 to July 31, 2026. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **What was counted:** Orders for products in the CAMPING category. Internal test orders were left out. Each order had only one line, so counting orders or order lines both gives 660.\n\nApplied learned guidance: fiscal year starts February 1 (Q2 = May\u2013July), and internal test orders are excluded from business metrics.",
+    "latency_s": 16.5,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U9",
+    "group": "unseen",
+    "question": "How many CAMPING orders did we have in fiscal Q2 2027?",
+    "truth": 660,
+    "run": 1,
+    "correct": true,
+    "headline": "660 CAMPING orders",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "I can't answer this one yet, because two things aren't defined in the sales data model and the total depends on both:\n\n1. **When fiscal 2027 starts.** The data only has calendar order dates, with no fiscal calendar. Common setups give very different first halves:\n   - **Starts February 1 (typical in retail):** first half = Feb 1 \u2013 Jul 31, 2026\n   - **Starts July 1:** first half = Jul 1 \u2013 Dec 31, 2026 (only partly over, since today is Oct 14, 2026)\n   - **Starts October 1:** first half = Oct 1, 2026 \u2013 Mar 31, 2027 (only just started)\n   - **Same as the calendar year:** first half = Jan 1 \u2013 Jun 30, 2027 (hasn't happened yet)\n\n2. **What counts as revenue.** The model's \"total revenue\" is gross sales at list price. It doesn't take out discounts or refunds for returns. Which do you want?\n   - **Gross:** sales at list price\n   - **Net:** gross minus discounts and returns\n\nTell me your fiscal year start month and gross or net, and I'll get you the total.",
+    "latency_s": 13.9,
+    "tools": [
+      "query_sales"
+    ],
+    "agent": "no_memory",
+    "qid": "U10",
+    "group": "unseen",
+    "question": "What was total revenue for the first half of fiscal 2027?",
+    "truth": 1471277.45,
+    "run": 1,
+    "correct": false,
+    "headline": "When fiscal 2027 starts.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "FY2027 H1 = 2026-02-01 to 2026-07-31.Total revenue for the first half of fiscal 2027 was **$1,471,277.45** (net). Before discounts and returns, gross sales were $1,939,295.\n\n- **Date range:** February 1 \u2013 July 31, 2026, which is Q1 and Q2 of FY2027. The fiscal year starts February 1 and takes its name from the calendar year it ends in.\n- **Revenue:** net revenue, meaning gross sales minus discounts and returns.\n- **Excluded:** internal test orders.\n\nApplied learned guidance: the fiscal year starts February 1, revenue means net revenue, and internal orders are excluded.",
+    "latency_s": 17.6,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U10",
+    "group": "unseen",
+    "question": "What was total revenue for the first half of fiscal 2027?",
+    "truth": 1471277.45,
+    "run": 1,
+    "correct": true,
+    "headline": "$1,471,277.45",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**South had the most revenue in fiscal year 2026: $1,104,755 in gross revenue.** West was very close behind at $1,101,165, a gap of only about $3.6K.\n\nThe gap gets bigger if you subtract discounts and returns. South's net revenue was $853,604 and West's was $825,377.\n\n\n\nHow I measured it:\n- **Fiscal year:** The data doesn't say when the company's fiscal year starts, so I used the calendar year (Jan 1 \u2013 Dec 31, 2026). So far, orders only run through Sep 30, 2026. If your fiscal year starts in a different month, tell me and I'll rerun it.\n- **Revenue:** I used the data's standard definition, which is gross amount at list price. Net revenue is gross minus discounts and returns.",
+    "latency_s": 32.7,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U11",
+    "group": "unseen",
+    "question": "Which region had the most revenue in fiscal year 2026?",
+    "truth": [
+      "SOUTH"
+    ],
+    "run": 1,
+    "correct": true,
+    "headline": "South had the most revenue in fiscal year 2026: $1,104,755 in gross revenue.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "The **South** region had the most revenue in FY2026, with **$916,171** in net revenue. West came second at $848,934. Central ($570,930) and East ($568,124) were close to each other further back.\n\n\n\n**How these numbers were calculated:**\n- **Revenue** means net revenue: the full list-price amount minus discounts and returns.\n- **Fiscal year 2026** runs from February 1, 2025 to January 31, 2026, based on order date.\n- **Excluded:** internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: revenue counted as net, FY2026 starting February 1, and internal test orders left out.",
+    "latency_s": 33.0,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U11",
+    "group": "unseen",
+    "question": "Which region had the most revenue in fiscal year 2026?",
+    "truth": [
+      "SOUTH"
+    ],
+    "run": 1,
+    "correct": true,
+    "headline": "$916,171",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "The total gross amount for the STORE channel in calendar year 2025 was **$2,039,600**.\n\n- **Definition:** Gross amount is the sum of order line amounts at list price. Discounts and returns have not been taken off.\n- **Date range:** January 1, 2025 to December 31, 2025, based on order date.\n- **Scope:** 5,641 order lines from the STORE channel.",
+    "latency_s": 19.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "C1",
+    "group": "control",
+    "question": "What was the total gross amount for the STORE channel in calendar year 2025?",
+    "truth": 2039600,
+    "run": 1,
+    "correct": true,
+    "headline": "$2,039,600",
+    "lessons": "-"
+  },
+  {
+    "text": "User explicitly asks gross, STORE channel (internal exclusion implicit).The STORE channel's total gross amount in calendar year 2025 was **$2,039,600**, across 5,641 order lines.\n\n- **Gross amount:** the total at list price, before discounts and returns are taken off.\n- **Date range:** January 1 to December 31, 2025, by order date.\n- **Channel:** STORE only. Internal test orders aren't in this channel, so none are included.\n\nApplied learned guidance: \"revenue\" normally means net (gross minus discounts and returns), but you asked for gross, so this is the gross figure. Internal test orders are excluded from business metrics.",
+    "latency_s": 25.5,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "C1",
+    "group": "control",
+    "question": "What was the total gross amount for the STORE channel in calendar year 2025?",
+    "truth": 2039600,
+    "run": 1,
+    "correct": true,
+    "headline": "$2,039,600",
+    "lessons": "-"
+  },
+  {
+    "text": "**1,117 units** were sold through the ONLINE channel in January 2026.\n\n- **How units are counted:** units sold is the total of the quantity on each order line. Returned units are still included, because the data only records returns as a refund amount, not as a unit count.\n- **Date range:** January 1\u201331, 2026, by order date.\n- **Context:** those units came from 424 online order lines.",
+    "latency_s": 18.2,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "C2",
+    "group": "control",
+    "question": "How many units were sold through the ONLINE channel in January 2026?",
+    "truth": 1117,
+    "run": 1,
+    "correct": true,
+    "headline": "1,117 units",
+    "lessons": "-"
+  },
+  {
+    "text": "Filtering to ONLINE already excludes INTERNAL.The ONLINE channel sold **1,117 units** in January 2026.\n\n- **How units are counted:** total quantity across all ONLINE order lines.\n- **Dates:** January 1\u201331, 2026 (calendar month, by order date).\n\nApplied learned guidance: internal test orders (channel = 'INTERNAL') don't count toward business metrics. This total only includes ONLINE orders, so none of them were counted.",
+    "latency_s": 17.4,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "C2",
+    "group": "control",
+    "question": "How many units were sold through the ONLINE channel in January 2026?",
+    "truth": 1117,
+    "run": 1,
+    "correct": true,
+    "headline": "1,117 units",
+    "lessons": "-"
+  },
+  {
+    "text": "Assuming the fiscal year matches the calendar year, **Q1 FY2026 revenue (Jan 1 to Mar 31, 2026) was $1,255,020 gross**. After subtracting discounts and returns, net revenue was **$943,253**.\n\nThe data model doesn't say when the fiscal year starts, so I also calculated Q1 for two other common start months. It also doesn't say what \"revenue\" means. Its standard revenue measure is gross sales at list price, so I've shown net revenue alongside it.\n\n\n\nIf your fiscal year starts in another month, or you count revenue differently, tell me and I'll recalculate.",
+    "latency_s": 34.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S1",
+    "group": "seen",
+    "question": "What was revenue in Q1 of fiscal year 2026?",
+    "truth": 710794.2,
+    "run": 2,
+    "correct": false,
+    "headline": "Q1 FY2026 revenue (Jan 1 to Mar 31, 2026) was $1,255,020 gross",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Net revenue in Q1 of fiscal year 2026 was **$710,794.20**.\n\nThat number starts with $956,005 in gross sales, then subtracts $147,732.05 in discounts and $97,478.75 in returns.\n\n- **Date range:** Q1 FY2026 runs from February 1 to April 30, 2025. The fiscal year starts February 1 and takes its name from the calendar year it ends in.\n- **Revenue:** This is net revenue, meaning gross sales minus discounts and returns.\n- **Excluded:** Orders in the internal channel are test orders, so they're left out.\n\nApplied learned guidance: the fiscal year starts February 1, revenue means net revenue, and internal test orders are excluded.",
+    "latency_s": 17.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S1",
+    "group": "seen",
+    "question": "What was revenue in Q1 of fiscal year 2026?",
+    "truth": 710794.2,
+    "run": 2,
+    "correct": true,
+    "headline": "$710,794.20",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Total revenue for calendar year 2025 was $4,947,590.** This is the data model's standard \"total revenue\" figure: the sum of order line amounts at list price, before discounts and returns.\n\nThat figure is gross, so here's what's left after taking discounts and returns out:\n\n| Component | Amount |\n|---|---|\n| Gross revenue | $4,947,590 |\n| Less: discounts | \u2013$745,744 |\n| Less: returns | \u2013$531,297 |\n| **Net revenue** | **$3,670,549** |\n\n- **Date range:** January 1 \u2013 December 31, 2025, by order date. The data covers the whole year.\n- **Volume:** 11,450 order lines.\n\nIf your finance team reports revenue net of discounts and/or returns, use the $3.67M figure instead.",
+    "latency_s": 16.6,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S2",
+    "group": "seen",
+    "question": "What was our total revenue in calendar year 2025?",
+    "truth": 2910667.75,
+    "run": 2,
+    "correct": false,
+    "headline": "Total revenue for calendar year 2025 was $4,947,590.",
+    "lessons": "net+test"
+  },
+  {
+    "text": "Total net revenue for calendar year 2025 was **$2,910,667.75**.\n\n- **What \"revenue\" means here:** Net revenue, which is the list-price amount minus discounts and minus refunds for returns.\n  - List-price amount: $3,924,390.00\n  - Discounts: \u2212$593,112.50\n  - Returns: \u2212$420,609.75\n- **Dates:** Orders placed from January 1 to December 31, 2025.\n- **Excluded:** Internal test orders.\n\nApplied learned guidance: \"revenue\" means net revenue, not the list-price total, and internal test orders are left out of all business figures.",
+    "latency_s": 18.0,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S2",
+    "group": "seen",
+    "question": "What was our total revenue in calendar year 2025?",
+    "truth": 2910667.75,
+    "run": 2,
+    "correct": true,
+    "headline": "$2,910,667.75",
+    "lessons": "net+test"
+  },
+  {
+    "text": "Table is per order line; compute both.We had **11,450 orders in 2025**.\n\n- **Date range:** January 1 to December 31, 2025, by order date.\n- **How orders were counted:** this is the number of unique order IDs, across all channels, stores and products. The data is stored as one row per order line, but each 2025 order has only one line, so the order count and the line count are both 11,450.\n- **What's included:** all orders, including ones that were discounted or later returned.",
+    "latency_s": 18.0,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "S3",
+    "group": "seen",
+    "question": "How many orders did we have in 2025?",
+    "truth": 10891,
+    "run": 2,
+    "correct": false,
+    "headline": "11,450 orders in 2025",
+    "lessons": "test"
+  },
+  {
+    "text": "We had **10,891 orders in 2025**.\n\n- **Definition:** I counted distinct order IDs. The distinct count matches the row count, so each order is one row in this data.\n- **Date range:** Calendar year 2025 (January 1 to December 31, 2025), by order date.\n- **Excluded:** Internal test orders (channel = 'INTERNAL') aren't counted, since they're test records rather than real business.\n\nApplied learned guidance: internal test orders are left out of all business metrics.",
+    "latency_s": 18.9,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "S3",
+    "group": "seen",
+    "question": "How many orders did we have in 2025?",
+    "truth": 10891,
+    "run": 2,
+    "correct": true,
+    "headline": "10,891 orders in 2025",
+    "lessons": "test"
+  },
+  {
+    "text": "In Q2 2026, the West region had **$382,355 in gross sales**. After discounts and returns, net sales were **$292,614**.\n\nThe data doesn't say when your fiscal year starts, so I treated Q2 FY2026 as calendar Q2: April 1 to June 30, 2026.\n\n| Measure | Q2 2026 (West) |\n|---|---|\n| Gross sales (list price) | $382,355 |\n| Discounts | \u2013$56,899 |\n| Returns | \u2013$32,842 |\n| **Net sales** | **$292,614** |\n| Units sold | 2,622 |\n| Order lines | 887 |\n\n**How these are defined:**\n- **Gross sales** is the total at list price. The data model calls this \"total revenue.\"\n- **Net sales** is gross sales minus discounts and returns refunded.\n\nIf your fiscal year doesn't start in January (for example, a July 2025 start would make Q2 FY2026 October to December 2025), tell me the start month and I'll rerun it.",
+    "latency_s": 17.6,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U1",
+    "group": "unseen",
+    "question": "How much did the West region sell in Q2 FY2026?",
+    "truth": 210709.15,
+    "run": 2,
+    "correct": false,
+    "headline": "$382,355 in gross sales",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q2 FY2026 = 2025-05-01 to 2025-07-31.The West region had **$210,709.15 in net revenue** in Q2 FY2026.\n\n- **Dates:** Q2 FY2026 runs from May 1 to July 31, 2025.\n- **What \"revenue\" means:** net revenue, which is the gross amount minus discounts and returns.\n  - Gross: $286,455\n  - Discounts: \u2212$42,321.05\n  - Returns: \u2212$33,424.80\n- **Excluded:** internal test orders (the INTERNAL channel).\n\nApplied learned guidance: the fiscal year starts February 1 (so Q2 is May through July), revenue means net revenue, and internal test orders are left out.",
+    "latency_s": 16.9,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U1",
+    "group": "unseen",
+    "question": "How much did the West region sell in Q2 FY2026?",
+    "truth": 210709.15,
+    "run": 2,
+    "correct": true,
+    "headline": "$210,709.15 in net revenue",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Revenue for 2026 so far is $3,643,920 (gross).** That figure covers January 1 to September 30, 2026. The data doesn't define a fiscal year, so I used the calendar year, and the most recent order is from September 30.\n\n| Measure | Amount |\n|---|---|\n| Gross revenue (at list price) | $3,643,920 |\n| Less discounts | \u2013$540,634 |\n| Less returns | \u2013$347,875 |\n| **Net revenue** | **$2,755,411** |\n\n- **Definitions:** \"Total revenue\" in the data means the gross amount at list price. Net revenue is gross minus discounts and returns.\n- **Partial year:** The year isn't finished. Q4 2026 has no data yet, so this is not a full-year number.\n\nIf your fiscal year doesn't follow the calendar (for example, February to January or July to June), tell me the start month and I'll recalculate.",
+    "latency_s": 23.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U2",
+    "group": "unseen",
+    "question": "What was revenue for fiscal year 2026?",
+    "truth": 2904159.2,
+    "run": 2,
+    "correct": false,
+    "headline": "Revenue for 2026 so far is $3,643,920 (gross).",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Net revenue for fiscal year 2026 was **$2,904,159.20**.\n\n- **Date range:** February 1, 2025 to January 31, 2026. The fiscal year starts February 1 and takes the name of the calendar year it ends in.\n- **Definition:** Revenue here means net revenue, which is gross amount minus discounts minus returns. Gross was $3,916,850, discounts were $589,951.75 and returns were $422,739.05.\n- **Excluded:** Internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: the fiscal year runs February to January, revenue is net of discounts and returns, and internal test orders are left out.",
+    "latency_s": 18.1,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U2",
+    "group": "unseen",
+    "question": "What was revenue for fiscal year 2026?",
+    "truth": 2904159.2,
+    "run": 2,
+    "correct": true,
+    "headline": "$2,904,159.20",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**Camping** had the highest revenue in Q3 FY2026: **$459,720 gross**, or **$349,213 net**. Camping comes first under both definitions, and Footwear is second at $281,670 gross.\n\n- **Date range:** July 1 \u2013 September 30, 2026. The data doesn't define a fiscal calendar, so I treated FY2026 as the calendar year 2026. If your fiscal year starts in a different month, Q3 covers different dates and the result could change.\n- **Gross revenue:** the order line amount at list price, which is the data's standard \"total revenue.\"\n- **Net revenue:** gross minus discounts and returns.\n\n\n\nIf your fiscal year starts in a different month, tell me which one and I'll rerun it.",
+    "latency_s": 16.5,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U3",
+    "group": "unseen",
+    "question": "Which product category had the highest revenue in Q3 FY2026?",
+    "truth": [
+      "CAMPING"
+    ],
+    "run": 2,
+    "correct": true,
+    "headline": "$459,720 gross",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q3 FY2026 = 2025-08-01 to 2025-10-31.**Camping had the highest revenue in Q3 FY2026, with about $303.2K in net revenue.** That's about 76% more than the next category, Footwear (about $172.0K).\n\n\n\n**Definitions used:**\n- **Date range:** Q3 FY2026 runs from August 1 to October 31, 2025. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **Revenue:** net revenue, meaning gross amount minus discounts and returns. Camping also comes out on top by gross revenue ($411.3K).\n- **Exclusions:** internal test orders (channel = 'INTERNAL') are left out.\n\nApplied learned guidance: fiscal year starts February 1, revenue means net revenue, and internal test orders are excluded.",
+    "latency_s": 19.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U3",
+    "group": "unseen",
+    "question": "Which product category had the highest revenue in Q3 FY2026?",
+    "truth": [
+      "CAMPING"
+    ],
+    "run": 2,
+    "correct": true,
+    "headline": "Camping had the highest revenue in Q3 FY2026, with about $303.2K in net revenue.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "The data doesn't define a fiscal calendar, so the answer depends on when your fiscal year starts. Under the most likely reading it's **2,816 orders**.\n\nThat figure assumes fiscal 2026 runs October 2025 to September 2026, which makes Q4 **July 1 \u2013 September 30, 2026**. It's the most recent full quarter in the data: July had 964 orders, August 942 and September 910. \"Orders\" means distinct order IDs. Each order has one line, so counting orders or lines gives the same number.\n\nIf your fiscal year is set up differently, the count changes:\n\n| Fiscal year | Q4 months | Orders |\n|---|---|---|\n| Same as the calendar year (Jan\u2013Dec 2026) | Oct\u2013Dec 2026 | No data yet (the data ends Sep 30, 2026) |\n| Ends September 30 (assumed above) | Jul\u2013Sep 2026 | **2,816** |\n| Ends June 30 | Apr\u2013Jun 2026 | 2,889 |\n| Retail-style year ending January 2026 | Nov 2025\u2013Jan 2026 | 2,805 |\n\nTell me which fiscal calendar your company uses and I'll give you the exact number.",
+    "latency_s": 21.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U4",
+    "group": "unseen",
+    "question": "How many orders were placed in Q4 of fiscal 2026?",
+    "truth": 2674,
+    "run": 2,
+    "correct": false,
+    "headline": "2,816 orders",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "Q4 FY2026 = 2025-11-01 to 2026-01-31.**2,674 orders** were placed in Q4 of fiscal 2026.\n\n- **Date range:** November 1, 2025 to January 31, 2026, based on order date. The fiscal year starts February 1 and is named for the calendar year it ends in, so FY2026 runs from February 1, 2025 to January 31, 2026. Q4 is November through January.\n- **How orders were counted:** each order ID is counted once, and internal test orders (channel = 'INTERNAL') are left out.\n\nApplied learned guidance: fiscal year starts February 1 (so Q4 is Nov\u2013Jan), and internal test orders are excluded.",
+    "latency_s": 17.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U4",
+    "group": "unseen",
+    "question": "How many orders were placed in Q4 of fiscal 2026?",
+    "truth": 2674,
+    "run": 2,
+    "correct": true,
+    "headline": "2,674 orders",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "East region sales in Q1 FY2027 were about **$245.7K gross** and **$185.2K net**, assuming FY2027 runs from February 2026 to January 2027. That would make Q1 **Feb 1 \u2013 Apr 30, 2026**.\n\n- **Gross sales:** $245,695 (list price \u00d7 units, from 573 order lines)\n- **Less discounts:** $36,013\n- **Less returns:** $24,504\n- **Net sales:** $185,178\n\nThe data doesn't say when the fiscal year starts, so I picked a February start, which is common in retail. Other start dates change the answer:\n- **If FY2027 starts in January 2026 (Q1 = Jan\u2013Mar 2026):** $254.6K gross, $191.8K net.\n- **If it starts in July 2026 (Q1 = Jul\u2013Sep 2026):** $242.7K gross, $178.5K net.\n- **If it means calendar 2027 (Q1 = Jan\u2013Mar 2027):** there's no data yet, since that period hasn't happened.\n\nThe table below has all three options side by side. If you tell me your fiscal calendar and which sales figure you use (gross or net), I can confirm the exact number.",
+    "latency_s": 20.2,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U5",
+    "group": "unseen",
+    "question": "What were sales in the East region in Q1 FY2027?",
+    "truth": 148517.05,
+    "run": 2,
+    "correct": false,
+    "headline": "$245.7K gross",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "Q1 FY2027 = 2026-02-01 to 2026-04-30.East region net sales for Q1 FY2027 were **$148,517.05**.\n\n- **Breakdown:** Gross sales were $198,445, minus $28,196.40 in discounts and $21,731.55 in returns.\n- **Date range:** February 1 to April 30, 2026. The fiscal year starts February 1 and is named for the calendar year it ends in.\n- **What counts as sales:** \"Sales\" here means net revenue, which is gross sales minus discounts and returns. I left out internal test orders.\n\nApplied learned guidance: the fiscal year starts February 1, revenue means net revenue, and internal orders are excluded.",
+    "latency_s": 15.3,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U5",
+    "group": "unseen",
+    "question": "What were sales in the East region in Q1 FY2027?",
+    "truth": 148517.05,
+    "run": 2,
+    "correct": true,
+    "headline": "$148,517.05",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "The answer depends on when your fiscal year starts, and the sales data doesn't say. Here are the totals for the three most common setups:\n\n| Fiscal year 2026 definition | Date range | Units sold |\n|---|---|---|\n| Same as calendar year | Jan 1 \u2013 Dec 31, 2026 | **25,447** (so far) |\n| October\u2013September year | Oct 1, 2025 \u2013 Sep 30, 2026 | **34,038** |\n| July\u2013June year | Jul 1, 2025 \u2013 Jun 30, 2026 | **34,376** |\n\n- \"Units sold\" is the total quantity on all order lines. Returns are not taken out, because the data only records returns as dollar amounts, not units.\n- The data stops at **September 30, 2026**. So the calendar-year number covers only January through September, and the October\u2013September year is complete.\n\nIf you tell me when your fiscal year starts (for example, February 1), I can give you the exact number.",
+    "latency_s": 22.2,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U6",
+    "group": "unseen",
+    "question": "How many units did we sell in fiscal year 2026?",
+    "truth": 27216,
+    "run": 2,
+    "correct": false,
+    "headline": "25,447",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "We sold **27,216 units** in fiscal year 2026.\n\n- **Units:** the total quantity across all order lines.\n- **Date range:** fiscal year 2026 runs from February 1, 2025 to January 31, 2026.\n- **Excluded:** internal test orders (channel = 'INTERNAL') aren't counted.\n\nApplied learned guidance: the fiscal year starts February 1 and is named for the year it ends in, and internal test orders are left out of all business metrics.",
+    "latency_s": 17.0,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U6",
+    "group": "unseen",
+    "question": "How many units did we sell in fiscal year 2026?",
+    "truth": 27216,
+    "run": 2,
+    "correct": true,
+    "headline": "27,216 units",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "ONLINE revenue in March 2026 was **$156,420**. This is gross revenue at list price, which is how the data model defines \"revenue\".\n\n- **Date range:** March 1\u201331, 2026, by order date\n- **Scope:** 430 order lines in the ONLINE channel\n\nIf you take out discounts and returns, the figure is smaller:\n\n| Component | Amount |\n|---|---|\n| Gross revenue | $156,420.00 |\n| Discounts | \u2212$24,273.00 |\n| Returns | \u2212$16,102.80 |\n| **Net revenue** | **$116,044.20** |\n\nUse gross if you want list-price sales. Use net ($116,044) if you want the money actually kept after discounts and refunds.",
+    "latency_s": 17.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U7",
+    "group": "unseen",
+    "question": "What was revenue from the ONLINE channel in March 2026?",
+    "truth": 116044.2,
+    "run": 2,
+    "correct": false,
+    "headline": "$156,420",
+    "lessons": "net"
+  },
+  {
+    "text": "Net revenue from the ONLINE channel in March 2026 was **$116,044.20**. Before discounts and returns, gross revenue was $156,420.\n\n- **Definition:** Net revenue is gross amount minus discounts minus returns.\n- **Date range:** Orders dated March 1\u201331, 2026, on the ONLINE channel only.\n\nApplied learned guidance: \"revenue\" means net revenue, not gross.",
+    "latency_s": 17.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U7",
+    "group": "unseen",
+    "question": "What was revenue from the ONLINE channel in March 2026?",
+    "truth": 116044.2,
+    "run": 2,
+    "correct": true,
+    "headline": "$116,044.20",
+    "lessons": "net"
+  },
+  {
+    "text": "The average order value in 2025 was **$432.10**, measured at gross (list price) revenue.\n\n- **How it's calculated:** total 2025 gross revenue of $4,947,590 divided by 11,450 distinct orders.\n- **Date range:** January 1 \u2013 December 31, 2025, by order date.\n- **How \"revenue\" is defined:** The data doesn't set a standard definition of revenue, so the answer changes depending on what you subtract:\n\n| Revenue basis | Average order value |\n|---|---|\n| Gross (list price) | $432.10 |\n| Minus discounts ($745,744) | $366.97 |\n| Minus discounts and returns ($531,297) | $320.57 |\n\nEach order has exactly one line in the data, so the average per order and per line are the same.",
+    "latency_s": 16.0,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U8",
+    "group": "unseen",
+    "question": "What was the average order value in 2025?",
+    "truth": 267.25,
+    "run": 2,
+    "correct": false,
+    "headline": "$432.10",
+    "lessons": "net+test"
+  },
+  {
+    "text": "The average order value in 2025 was **$267.25**.\n\n- **How it's calculated:** net revenue of $2,910,667.75 divided by 10,891 distinct orders.\n- **Revenue used:** net revenue, meaning the list-price amount minus discounts and minus refunds for returns.\n- **Orders excluded:** internal test orders (channel = 'INTERNAL') are left out.\n- **Date range:** calendar year 2025, January 1 to December 31, 2025, by order date.\n\nApplied learned guidance: revenue means net revenue (list-price amount minus discounts and returns), and internal test orders are excluded.",
+    "latency_s": 14.2,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U8",
+    "group": "unseen",
+    "question": "What was the average order value in 2025?",
+    "truth": 267.25,
+    "run": 2,
+    "correct": true,
+    "headline": "$267.25",
+    "lessons": "net+test"
+  },
+  {
+    "text": "Assuming the common retail fiscal calendar, we had **697 CAMPING orders in fiscal Q2 2027**. The data model doesn't say when your fiscal year starts, so please confirm this is the right one.\n\n**How I counted it:**\n- **Fiscal year:** FY2027 runs from February 1, 2026 to January 31, 2027, so fiscal Q2 is **May 1 to July 31, 2026**.\n- **Orders:** I counted each distinct order ID once if it had at least one item in the CAMPING category.\n\n**If your fiscal year starts in a different month, the answer changes:**\n\n| Fiscal year starts | Fiscal Q2 2027 dates | CAMPING orders |\n|---|---|---|\n| February 2026 | May\u2013Jul 2026 | **697** |\n| April 2026 | Jul\u2013Sep 2026 | 687 |\n| March 2026 | Jun\u2013Aug 2026 | not calculated yet |\n| October 2026 | Jan\u2013Mar 2027 | no data yet (records end Sep 30, 2026) |\n\nTell me your fiscal year start month and I'll confirm the exact number.",
+    "latency_s": 28.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U9",
+    "group": "unseen",
+    "question": "How many CAMPING orders did we have in fiscal Q2 2027?",
+    "truth": 660,
+    "run": 2,
+    "correct": false,
+    "headline": "697 CAMPING orders in fiscal Q2 2027",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "Q2 FY2027 = 2026-05-01 to 2026-07-31.We had **660 CAMPING orders** in fiscal Q2 2027.\n\n- **Dates:** Fiscal Q2 2027 runs from May 1, 2026 to July 31, 2026, based on order date.\n- **What was counted:** Orders for products in the CAMPING category. Internal test orders (channel = 'INTERNAL') were left out. The count of distinct orders and the count of order lines were both 660, so each order had one CAMPING line.\n\nApplied learned guidance: the fiscal year starts February 1 and is named for the year it ends in (Q2 is May\u2013July), and internal test orders are excluded.",
+    "latency_s": 15.9,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U9",
+    "group": "unseen",
+    "question": "How many CAMPING orders did we have in fiscal Q2 2027?",
+    "truth": 660,
+    "run": 2,
+    "correct": true,
+    "headline": "660 CAMPING orders",
+    "lessons": "fiscal+test"
+  },
+  {
+    "text": "**Total revenue for the first half of fiscal 2027 was $2,426,720** (gross, at list price). After discounts and returns, net revenue was **$1,854,577.70**.\n\nThe data doesn't define the fiscal calendar or say which revenue measure to use, so I assumed:\n- **Fiscal year:** FY2027 starts February 1, 2026, which is common in retail. That makes H1 **February 1 \u2013 July 31, 2026**. The data covers that whole period.\n- **Revenue:** The standard \"total revenue\" figure adds up order-line amounts at list price, before discounts or returns.\n\n**How gross becomes net:**\n- Gross revenue: $2,426,720\n- Minus discounts: $360,279.45\n- Minus returns: $211,862.85\n- = Net revenue: $1,854,577.70\n\nThat's 5,764 order lines in total.\n\nIf your fiscal year starts in a different month, or you'd rather use net revenue as the headline number, tell me and I'll rerun it.",
+    "latency_s": 16.4,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U10",
+    "group": "unseen",
+    "question": "What was total revenue for the first half of fiscal 2027?",
+    "truth": 1471277.45,
+    "run": 2,
+    "correct": false,
+    "headline": "Total revenue for the first half of fiscal 2027 was $2,426,720",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "FY2027 H1 = 2026-02-01 to 2026-07-31.Net revenue for the first half of fiscal 2027 was **$1,471,277.45**. Gross revenue at list price was $1,939,295, so discounts and returns took off about $468K.\n\n- **Date range:** February 1 to July 31, 2026. That's Q1 and Q2 of FY2027, since the fiscal year starts February 1 and is named for the calendar year it ends in.\n- **What counts as revenue:** net revenue, meaning gross amount minus discounts minus returns.\n- **What's left out:** internal test orders (channel = 'INTERNAL').\n\nApplied learned guidance: the fiscal year starts February 1, revenue means net revenue, and internal orders are left out.",
+    "latency_s": 15.7,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U10",
+    "group": "unseen",
+    "question": "What was total revenue for the first half of fiscal 2027?",
+    "truth": 1471277.45,
+    "run": 2,
+    "correct": true,
+    "headline": "$1,471,277.45",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**South had the most revenue in 2026**, with **$1,104,755** in gross revenue. West was a very close second at $1,101,165, only about $3.6K behind.\n\nSouth still comes first after subtracting discounts and returns: **$853,604** net, against $825,377 for West.\n\n\n\n**Definitions and date range:**\n- **Fiscal year:** The data doesn't define one, so I used the calendar year (Jan 1 \u2013 Dec 31, 2026). The data currently runs from Jan 1 to Sep 30, 2026, so this is a partial year. If your fiscal year starts in a different month, tell me and I'll rerun it.\n- **Gross revenue:** The default revenue measure, which is order amounts at list price.\n- **Net revenue:** Gross revenue minus discounts and returned amounts.\n\nBecause South and West are so close on gross revenue, a different fiscal-year start date could change which one comes first.",
+    "latency_s": 24.0,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "U11",
+    "group": "unseen",
+    "question": "Which region had the most revenue in fiscal year 2026?",
+    "truth": [
+      "SOUTH"
+    ],
+    "run": 2,
+    "correct": true,
+    "headline": "South had the most revenue in 2026",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "**South had the most revenue in fiscal year 2026, with about $916.2K in net revenue.** West came second at about $848.9K. Central (about $570.9K) and East (about $568.1K) were close to each other and well behind.\n\n\n\n**Definitions used:**\n- **Revenue:** net revenue, meaning the order amount at list price minus discounts and returns.\n- **Fiscal year 2026:** February 1, 2025 to January 31, 2026, since the fiscal year starts February 1.\n- **Excluded orders:** internal test orders, which aren't counted in business metrics.\n\nApplied learned guidance: revenue means net revenue, FY2026 runs Feb 2025\u2013Jan 2026, and internal test orders are excluded.",
+    "latency_s": 25.0,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "U11",
+    "group": "unseen",
+    "question": "Which region had the most revenue in fiscal year 2026?",
+    "truth": [
+      "SOUTH"
+    ],
+    "run": 2,
+    "correct": true,
+    "headline": "South had the most revenue in fiscal year 2026, with about $916.2K in net revenue.",
+    "lessons": "fiscal+net+test"
+  },
+  {
+    "text": "In calendar year 2025, the STORE channel's total gross amount was **$2,039,600**, across 5,641 order lines.\n\n- **Gross amount** is the order line amount at list price, before discounts and returns are taken off.\n- **Date range** is January 1 to December 31, 2025, by order date.",
+    "latency_s": 10.8,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "C1",
+    "group": "control",
+    "question": "What was the total gross amount for the STORE channel in calendar year 2025?",
+    "truth": 2039600,
+    "run": 2,
+    "correct": true,
+    "headline": "$2,039,600",
+    "lessons": "-"
+  },
+  {
+    "text": "The STORE channel's total gross amount for calendar year 2025 was **$2,039,600**, across 5,641 order lines.\n\n- **Definition:** Gross amount is the sum of order lines at list price, before discounts and returns are taken off.\n- **Date range:** Orders dated January 1 to December 31, 2025.\n- This is not \"revenue.\" Here, revenue means net revenue: gross minus discounts and returns.\n- Internal test orders are excluded from business metrics. Filtering to the STORE channel already leaves them out.\n\nApplied learned guidance: I reported gross (not net revenue) because you asked for gross specifically, and internal test orders are excluded.",
+    "latency_s": 17.5,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "C1",
+    "group": "control",
+    "question": "What was the total gross amount for the STORE channel in calendar year 2025?",
+    "truth": 2039600,
+    "run": 2,
+    "correct": true,
+    "headline": "$2,039,600",
+    "lessons": "-"
+  },
+  {
+    "text": "**1,117 units** were sold through the ONLINE channel in January 2026, across 424 order lines.\n\n- **How units are counted:** the total of the quantity on each order line. Returns are not taken off; the data records returns as refund amounts, not as units.\n- **Date range:** January 1\u201331, 2026, by order date.\n\nFor comparison, the STORE channel sold 1,140 units and the INTERNAL channel sold 615 in the same month.",
+    "latency_s": 18.3,
+    "tools": [
+      "query_sales",
+      "system_execute_sql"
+    ],
+    "agent": "no_memory",
+    "qid": "C2",
+    "group": "control",
+    "question": "How many units were sold through the ONLINE channel in January 2026?",
+    "truth": 1117,
+    "run": 2,
+    "correct": true,
+    "headline": "1,117 units",
+    "lessons": "-"
+  },
+  {
+    "text": "ONLINE filter already excludes INTERNAL.**1,117 units** were sold through the ONLINE channel in January 2026.\n\n- **How it's counted:** units are the total quantity on all order lines where the channel is ONLINE.\n- **Dates:** order dates from January 1 to January 31, 2026, calendar month (not fiscal).\n\nApplied learned guidance: INTERNAL test orders are excluded from all business metrics. Since this count only includes ONLINE orders, that rule didn't change the result.",
+    "latency_s": 12.9,
+    "tools": [
+      "query_sales",
+      "lessons_memory",
+      "system_execute_sql"
+    ],
+    "agent": "memory",
+    "qid": "C2",
+    "group": "control",
+    "question": "How many units were sold through the ONLINE channel in January 2026?",
+    "truth": 1117,
+    "run": 2,
+    "correct": true,
+    "headline": "1,117 units",
+    "lessons": "-"
+  }
+]

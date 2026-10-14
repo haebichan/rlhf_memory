@@ -12,9 +12,49 @@ Cortex Agents run on closed-weight models, so you can't post-train them on user 
 
 ---
 
+![RLHF-inspired memory pipeline](assets/rlhf_memory_pipeline.png)
+
 ## 📊 Results
 
-Before memory the agent got **0 of 3** questions right. After **3 approved lessons** it got **5 of 5**, including **2 questions it had never seen**. Every answer below was checked against ground truth computed directly in SQL.
+**Three approved lessons took the agent from 48% to 100% accuracy on 33 new questions, with no regressions and no added latency.**
+
+The eval compares `RLHF_MEMORY_AGENT` against `BASELINE_NO_MEMORY_AGENT`. The baseline is identical (same semantic view, model, and instructions) except it has no `lessons_memory` tool. Every question ran twice per agent, and every answer was graded against ground truth computed in SQL. Grading is strict: only the headline figure counts.
+
+### Realistic mix (33 new questions, none reuse a lesson's wording)
+
+| | ❌ No memory | ✅ With memory |
+|---|---|---|
+| **Overall accuracy** | 32/66 (**48%**) | 66/66 (**100%**) |
+| Questions where a lesson applies | 0/34 (0%) | 34/34 (100%) |
+| Questions no lesson applies to (regression check) | 32/32 (100%) | 32/32 (100%) |
+| Mean latency | 19.0s | 19.4s |
+
+By lesson: test-order exclusion 0/30 → 30/30, net revenue 0/24 → 24/24, fiscal calendar 0/14 → 14/14.
+
+- **Lessons generalize.** Every question was new, with different periods, regions, categories and metrics (AOV, revenue per unit, top month, top fiscal quarter).
+- **No regressions.** On questions no lesson applies to (product/store facts, channel-scoped metrics), the extra context changed nothing.
+- **No latency cost.** The added Cortex Search call is within run-to-run noise.
+
+### Targeted set (16 questions built around the traps)
+
+| | ❌ No memory | ✅ With memory |
+|---|---|---|
+| The lessons' own questions | 0/6 | 6/6 |
+| New questions hitting a trap | 4/22 | 22/22 |
+| Controls (no trap) | 4/4 | 4/4 |
+| **Overall** | 8/32 (**25%**) | 32/32 (**100%**) |
+
+The baseline's 4 "passes" on trap questions were luck: it used the wrong fiscal year but still named the right top category/region.
+
+### ⚖️ Caveats
+
+- Synthetic data with three planted rules. The overall number depends on the question mix; here about half the questions hit a rule.
+- This measures whether **approved** lessons fix and generalize. It does not measure how quickly the loop discovers new problems.
+- The obvious alternative, hand-writing the same rules into the agent instructions, would likely score the same. The case for memory is that fixes come from user feedback with an owner's approval, and lessons load only when relevant.
+
+### 🔎 Walkthrough example
+
+The original before/after run from the demo, with answers checked against SQL ground truth:
 
 | Question | ❌ Before | ✅ After | 🎯 Ground truth |
 |---|---|---|---|
@@ -166,6 +206,7 @@ All objects are in `HAEBI_DEMO.RLHF_MEMORY`:
 | `ORDERS`, `STORES`, `PRODUCTS`, `FISCAL_CALENDAR` | Tables | Dummy retail data with planted traps |
 | `RETAIL_SALES_SV` | Semantic view | Deliberately naive baseline |
 | `RLHF_MEMORY_AGENT` | Cortex Agent | Tools: `query_sales` (Analyst) + `lessons_memory` (Search) |
+| `BASELINE_NO_MEMORY_AGENT` | Cortex Agent | Eval baseline: same spec without `lessons_memory` |
 | `FEEDBACK_WITH_TRACE` | View | Joins feedback events to trace spans |
 | `REVIEW_QUEUE` | Table | AI_COMPLETE case files awaiting review |
 | `LESSONS` | Table | Approved long-term memory |
@@ -182,6 +223,10 @@ All objects are in `HAEBI_DEMO.RLHF_MEMORY`:
 | `baseline_runs.json` | Answers before memory, with request IDs and SQL |
 | `after_runs.json` | Answers after memory |
 | `versions/*/agent_spec.json` | Agent specification |
+| `eval/run_eval.py` | Memory vs. no-memory accuracy eval (`targeted` and `realistic` suites) |
+| `eval/results_*.json` | Every answer, headline, grade and latency from the eval runs |
+| `eval/baseline_agent_spec.json` | Spec for `BASELINE_NO_MEMORY_AGENT` |
+| `assets/rlhf_memory_pipeline.png` | Pipeline diagram |
 
 ### ▶️ Usage
 
@@ -191,6 +236,12 @@ python agent_client.py --connection <conn> run --question "What was revenue in Q
 
 # Submit thumbs up/down feedback, the same API CoWork uses
 python agent_client.py --connection <conn> feedback --file baseline_feedback.json
+
+# Run the accuracy eval (connection's password must be a PAT)
+python eval/run_eval.py --suite realistic --runs 2 --connection <conn>
+
+# Re-score saved answers without calling the agents
+python eval/run_eval.py --regrade eval/results_realistic.json
 ```
 
 ---
@@ -206,6 +257,8 @@ python agent_client.py --connection <conn> feedback --file baseline_feedback.jso
 
 ## 🚀 Next steps
 
-- 📏 Run the before/after as a formal **Cortex Agent Evaluation**
+- 📏 Port the eval to a formal **Cortex Agent Evaluation**
+- 🧪 Add a **held-out trap** with no lesson, then run it through the full loop (feedback → diagnose → approve) and show it get fixed
+- 🆚 Compare against putting the same rules directly in the agent instructions
 - ⬆️ Demo a **Tier 1 promotion**: move the net-revenue lesson into the semantic view itself
 - 🗓️ Schedule the diagnose step with a **task** so new 👎 feedback flows into the review queue automatically
