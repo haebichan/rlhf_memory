@@ -1,0 +1,11 @@
+STORE_ID,STORE_NAME,REGION,STATE
+1,Seattle Flagship,WEST,WA
+2,Portland Pearl,WEST,OR
+3,San Francisco Union,WEST,CA
+4,Austin Domain,SOUTH,TX
+5,Atlanta Midtown,SOUTH,GA
+6,Miami Brickell,SOUTH,FL
+7,Chicago Loop,CENTRAL,IL
+8,Denver LoDo,CENTRAL,CO
+9,New York SoHo,EAST,NY
+10,Boston Back Bay,EAST,MA

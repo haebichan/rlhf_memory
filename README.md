@@ -218,6 +218,8 @@ All objects are in `HAEBI_DEMO.RLHF_MEMORY`:
 
 | File | What it is |
 |---|---|
+| `setup/setup.sql` | Recreates every Snowflake object: mock data, semantic view, review queue, lessons, search service, both agents, feedback view |
+| `setup/data/*.csv` | Mock retail data and the three demo lessons, loaded by `setup.sql` |
 | `agent_client.py` | Minimal REST client: `run` (agent `:run`) and `feedback` (agent `:feedback`) |
 | `baseline_feedback.json` | The three 👎 submissions |
 | `baseline_runs.json` | Answers before memory, with request IDs and SQL |
@@ -232,6 +234,9 @@ All objects are in `HAEBI_DEMO.RLHF_MEMORY`:
 ### ▶️ Usage
 
 ```bash
+# Recreate the demo (run from the repo root so the PUT paths resolve; replaces HAEBI_DEMO.RLHF_MEMORY)
+snow sql -f setup/setup.sql -c <conn>
+
 # Ask the agent questions (captures request_id, SQL, answer)
 python agent_client.py --connection <conn> run --question "What was revenue in Q1 of fiscal year 2026?" --out runs.json
 
