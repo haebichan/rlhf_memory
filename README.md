@@ -227,6 +227,7 @@ All objects are in `HAEBI_DEMO.RLHF_MEMORY`:
 | `eval/results_*.json` | Every answer, headline, grade and latency from the eval runs |
 | `eval/baseline_agent_spec.json` | Spec for `BASELINE_NO_MEMORY_AGENT` |
 | `assets/rlhf_memory_pipeline.png` | Pipeline diagram |
+| `review_app/streamlit_app.py` | Streamlit in Snowflake review app: pull feedback, edit/approve lessons, retire lessons |
 
 ### ▶️ Usage
 
@@ -243,6 +244,22 @@ python eval/run_eval.py --suite realistic --runs 2 --connection <conn>
 # Re-score saved answers without calling the agents
 python eval/run_eval.py --regrade eval/results_realistic.json
 ```
+
+### 🧑‍⚖️ Review app (Streamlit in Snowflake)
+
+`review_app/streamlit_app.py` is the human-approval step as a single-file app. Create a new Streamlit in Snowflake app in Snowsight and paste it in.
+
+| Tab | What it does |
+|---|---|
+| **Inbox** | **Pull new feedback** copies new 👎 rows from `FEEDBACK_WITH_TRACE` into `REVIEW_QUEUE` (deduplicated on `request_id`) and drafts a case file for each with AI_COMPLETE |
+| **Review** | Shows the question, feedback, answer, SQL and AI diagnosis with open questions. The reviewer edits the lesson, then approves or rejects it |
+| **Memory** | Lists all lessons and retires stale ones (`status = 'RETIRED'`) |
+
+No deploy step is needed after approval: `LESSONS_SEARCH` indexes only `status = 'APPROVED'` rows with a 1-minute target lag, so approved lessons reach the agent in about a minute.
+
+- **Capture is incremental, not a stream.** Observability events come from a table function, so a stream can't track them. The app deduplicates on `request_id` instead, so each pull adds only new feedback. To automate it, run the same capture and draft statements in a scheduled task.
+- **Privileges.** The app runs as its owner role. That role needs read/write on `REVIEW_QUEUE` and `LESSONS`, MONITOR on `RLHF_MEMORY_AGENT`, the `READ UNREDACTED AI OBSERVABILITY EVENTS TABLE` privilege, and `SNOWFLAKE.CORTEX_USER`.
+- **Model.** Set `MODEL` at the top of the file to any AI_COMPLETE model available in your region (default `claude-sonnet-4-5`).
 
 ---
 
@@ -261,4 +278,4 @@ python eval/run_eval.py --regrade eval/results_realistic.json
 - 🧪 Add a **held-out trap** with no lesson, then run it through the full loop (feedback → diagnose → approve) and show it get fixed
 - 🆚 Compare against putting the same rules directly in the agent instructions
 - ⬆️ Demo a **Tier 1 promotion**: move the net-revenue lesson into the semantic view itself
-- 🗓️ Schedule the diagnose step with a **task** so new 👎 feedback flows into the review queue automatically
+- 🗓️ Schedule the review app's capture and draft statements with a **task** so new 👎 feedback flows into the review queue automatically
